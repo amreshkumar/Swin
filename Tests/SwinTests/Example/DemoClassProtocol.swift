@@ -9,3 +9,6 @@ class DemoClass: DemoClassProtocol, SwinInitializer {
         DemoClass()
     }
 }
+
+class DemoClass2: DemoClassProtocol {
+}
