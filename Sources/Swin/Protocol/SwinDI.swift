@@ -13,6 +13,4 @@ public protocol SwinDI {
     static func create<T>(type: T.Type, args: [String: Any]?) -> T?
 
     static func replace(with newDependencyBlock: @escaping (Dependencies) -> Void) -> ReplaceToken
-    
-    static func replace(with newDependency: @escaping (Dependencies) -> Void, restoreAfter completion: () -> Void)
 }

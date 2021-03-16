@@ -40,12 +40,6 @@ public class Swin: SwinDI {
         return token
     }
     
-    public static func replace(with newDependency: @escaping (Dependencies) -> Void, restoreAfter completion: () -> Void) {
-        let token = self.replace(with: newDependency)
-        completion()
-        token.restore()
-    }
-
     @discardableResult
     private static func replace(with dependency: Dependencies) -> Dependencies {
         Swin._dependencies = dependency
