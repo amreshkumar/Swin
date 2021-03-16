@@ -38,7 +38,7 @@ class DependenciesTest: XCTestCase {
         XCTAssertTrue(type == DemoClass.self)
     }
 
-    func testShouldBeAbleToAppendToExistingDependecy() {
+    func testShouldBeAbleToAppendToExistingDependency() {
         let existingDependency = SwinDependencies()
 
         let newDependency = SwinDependencies.create { store in
@@ -52,4 +52,12 @@ class DependenciesTest: XCTestCase {
         XCTAssertTrue(type != nil)
         XCTAssertTrue(type == DemoClass.self)
     }
+    
+    static var allTests = [
+        ("testShouldBeAbleToAddDependency", testShouldBeAbleToAddDependency),
+        ("testShouldBeAbleToAddBlockDependency", testShouldBeAbleToAddBlockDependency),
+        ("testShouldBeAbleToCreate", testShouldBeAbleToCreate),
+        ("testShouldBeAbleToAppendToExistingDependency", testShouldBeAbleToAppendToExistingDependency)
+    ]
+
 }
