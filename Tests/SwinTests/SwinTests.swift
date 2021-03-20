@@ -75,6 +75,28 @@ final class SwinTests: XCTestCase {
         let instance2 = Swin.create(type: DemoClassProtocol.self)
         XCTAssertNotNil(instance2)
     }
+    
+    func testCreateObjectWithAutoResolvedDependency() {
+        let dependency = SwinDependencies.create { store in
+            store.add(type: PersonProtocol.self, using: Person.self)
+            store.add(type: CatProtocol.self, using: Cat.self)
+        }
+
+        Swin.add(dependency)
+        let person = Swin.create(type: PersonProtocol.self)
+        XCTAssertNotNil(person?.cat)
+    }
+    
+    func testCreateObjectWithInjectedDependency() {
+        Swin.register(type: WheelProtocol.self, using: Wheel.self)
+        
+        Swin.register(type: CarProtocol.self) {
+            return Car.createCar(wheel: Swin.create(type: WheelProtocol.self))
+        }
+        
+        let car = Swin.create(type: CarProtocol.self)
+        XCTAssertNotNil(car?.wheel)
+    }
 
     static var allTests = [
         ("testShouldBeAbleToAddDependency", testShouldBeAbleToAddDependency),
@@ -82,6 +104,8 @@ final class SwinTests: XCTestCase {
         ("testShouldBeAbleToRegisterDependencyFulfilledByBlock", testShouldBeAbleToRegisterDependencyFulfilledByBlock),
         ("testShouldBeAbleToReplaceDependency", testShouldBeAbleToReplaceDependency),
         ("testReturnNilForUnRegisteredDependency", testReturnNilForUnRegisteredDependency),
-        ("testShouldBeAbleToAddMultipleDependency", testShouldBeAbleToAddMultipleDependency)
+        ("testShouldBeAbleToAddMultipleDependency", testShouldBeAbleToAddMultipleDependency),
+        ("testCreateObjectWithAutoResolvedDependency", testCreateObjectWithAutoResolvedDependency),
+        ("testCreateObjectWithInjectedDependency", testCreateObjectWithInjectedDependency)
     ]
 }
